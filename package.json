@@ -30,7 +30,7 @@
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "semantic-ui-css": "^2.2.10",
-    "semantic-ui-react": "^0.67.2"
+    "semantic-ui-react": "^0.68.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.2",

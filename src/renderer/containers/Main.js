@@ -8,6 +8,12 @@ import MainMenu from '../components/Main/MainMenu'
 import MainContent from '../components/Main/MainContent'
 
 class Main extends Component {
+  props: {
+    menuItems: Array<{ id: string, name: string }>,
+    page: string,
+    setPage: (page: string) => void
+  }
+
   static defaultProps = {
     menuItems: [
       { id: 'regist', name: '登録' },
@@ -25,7 +31,7 @@ class Main extends Component {
             <MainMenu
               menuItems={menuItems}
               page={page}
-              onMenuClick={(val) => setPage(val)}
+              onMenuClick={(val: string): void => setPage(val)}
             />
           </Grid.Column>
         </Grid.Row>
@@ -48,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (page) => {
+    setPage: (page: string): void => {
       dispatch(setPage(page))
     }
   }
