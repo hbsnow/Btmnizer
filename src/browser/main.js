@@ -1,14 +1,19 @@
+// @flow
 import { app, BrowserWindow } from 'electron'
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
+import Config from 'electron-config'
 import path from 'path'
+import equal from 'deep-equal'
 
-import UserSettings from '../common/utils/UserSettings'
-
-const userDataPath = app.getPath('userData')
-const userSettings = new UserSettings(
-  path.join(userDataPath, 'Settings'),
-  path.join(__dirname, '../common/defaultSettings.json')
-)
+const config = new Config({
+  defaults: {
+    bounds: {
+      width: 1280,
+      height: 720
+    },
+    isMaximized: false
+  }
+})
 
 let mainWindow = null
 
@@ -19,16 +24,9 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', () => {
-  const settings = userSettings.get()
-
-  mainWindow = new BrowserWindow({
-    width: settings.window.main.size[0],
-    height: settings.window.main.size[1],
-    x: settings.window.main.position[0],
-    y: settings.window.main.position[1]
-  })
-
-  if (settings.window.main.isMaximized) {
+  const {width, height, x, y} = config.get('bounds')
+  mainWindow = new BrowserWindow({width, height, x, y})
+  if (config.get('isMaximized')) {
     mainWindow.maximize()
   }
 
@@ -48,13 +46,14 @@ app.on('ready', () => {
   }
 
   mainWindow.on('close', () => {
-    const currentSettings = {
-      size: mainWindow.getSize(),
-      position: mainWindow.getPosition(),
+    const current = {
+      bounds: mainWindow.getBounds(),
       isMaximized: mainWindow.isMaximized()
     }
 
-    userSettings.write(currentSettings)
+    if (!equal(current, config.store)) {
+      config.set(current)
+    }
   })
 
   mainWindow.on('closed', () => {
