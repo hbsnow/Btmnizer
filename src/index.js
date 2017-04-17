@@ -2,7 +2,6 @@
 import { app, BrowserWindow } from 'electron'
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 import Config from 'electron-config'
-import path from 'path'
 import equal from 'deep-equal'
 
 const config = new Config({
@@ -30,7 +29,7 @@ app.on('ready', () => {
     mainWindow.maximize()
   }
 
-  mainWindow.loadURL(path.join(__dirname, '../renderer/index.html'))
+  mainWindow.loadURL(`file://${__dirname}/app.html`)
 
   if (process.env.NODE_ENV === 'development') {
     const devtronInstalled = BrowserWindow.getDevToolsExtensions().hasOwnProperty('devtron')

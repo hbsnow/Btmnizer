@@ -7,11 +7,13 @@ import { setPage } from '../actions/main'
 import MainMenu from '../components/Main/MainMenu'
 import MainContent from '../components/Main/MainContent'
 
+import type { MenuItems, SetPage } from '../../common/Types'
+
 class Main extends Component {
   props: {
-    menuItems: Array<{ id: string, name: string }>,
+    menuItems: MenuItems,
     page: string,
-    setPage: (page: string) => void
+    setPage: SetPage
   }
 
   static defaultProps = {
