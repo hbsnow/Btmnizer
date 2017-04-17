@@ -3,7 +3,11 @@ import React from 'react'
 
 // import Setting from '../Setting/Setting'
 
-const MainContent = (props: { page: string }) => {
+type Props = {
+  page: string
+}
+
+const MainContent = (props: Props) => {
   const { page } = props
 
   switch (page) {

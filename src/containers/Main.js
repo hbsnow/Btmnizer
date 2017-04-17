@@ -7,14 +7,14 @@ import { setPage } from '../actions/main'
 import MainMenu from '../components/Main/MainMenu'
 import MainContent from '../components/Main/MainContent'
 
-import type { MenuItems, SetPage } from '../../common/Types'
+type Props = {
+  menuItems: Array<{ id: string, name: string }>,
+  page: string,
+  setPage: (page: string) => void
+}
 
 class Main extends Component {
-  props: {
-    menuItems: MenuItems,
-    page: string,
-    setPage: SetPage
-  }
+  props: Props
 
   static defaultProps = {
     menuItems: [
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (page: string): void => {
+    setPage: (page) => {
       dispatch(setPage(page))
     }
   }

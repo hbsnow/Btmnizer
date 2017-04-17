@@ -1,19 +1,26 @@
 // @flow
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
-import type { MenuItems, SetPage } from '../../../common/types'
 
-const MainMenu = (props: { menuItems: MenuItems, page: string, onMenuClick: SetPage }) => {
+type Props = {
+  menuItems: Array<{ id: string, name: string }>,
+  page: string,
+  onMenuClick: (page: string) => void
+}
+
+const MainMenu = (props: Props) => {
+  const { menuItems, page, onMenuClick } = props
+
   return (
     <Menu pointing secondary>
-      {props.menuItems.map((menuItem) =>
+      {menuItems.map((menuItem) =>
         <Menu.Item
-          key={props.menuItem.id}
-          name={props.menuItem.id}
-          active={props.page === menuItem.id}
-          onClick={(e, { name }) => props.onMenuClick(name)}
+          key={menuItem.id}
+          name={menuItem.id}
+          active={page === menuItem.id}
+          onClick={(e, { name }) => onMenuClick(name)}
         >
-          {props.menuItem.name}
+          {menuItem.name}
         </Menu.Item>
       )}
     </Menu>
