@@ -1,10 +1,7 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "standard",
-    "standard-jsx",
-    "plugin:flowtype/recommended"
-  ],
-  "plugins": [
-    "flowtype"
+    "standard-jsx"
   ]
 }

@@ -1,18 +1,10 @@
-// @flow
 import { app, BrowserWindow } from 'electron'
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 import Config from 'electron-config'
 import equal from 'deep-equal'
+import { defaultConfig } from './common/config'
 
-const config = new Config({
-  defaults: {
-    bounds: {
-      width: 1280,
-      height: 720
-    },
-    isMaximized: false
-  }
-})
+const config = new Config(defaultConfig)
 
 let mainWindow = null
 

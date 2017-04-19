@@ -1,14 +1,7 @@
-// @flow
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
 
-type Props = {
-  menuItems: Array<{ id: string, name: string }>,
-  page: string,
-  onMenuClick: (page: string) => void
-}
-
-const MainMenu = (props: Props) => {
+const MainMenu = (props) => {
   const { menuItems, page, onMenuClick } = props
 
   return (

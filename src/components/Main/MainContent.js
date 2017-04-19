@@ -1,13 +1,8 @@
-// @flow
 import React from 'react'
 
-// import Setting from '../Setting/Setting'
+// import Setting from '../../containers/Setting'
 
-type Props = {
-  page: string
-}
-
-const MainContent = (props: Props) => {
+const MainContent = (props) => {
   const { page } = props
 
   switch (page) {
