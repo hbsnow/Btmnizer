@@ -1,8 +1,8 @@
-import { SET_PAGE } from '../actions/main.js'
+import { SET_PAGE, SET_SETTINGS } from '../actions/main.js'
 
 const initialState = {
-  userSettings: {},
-  page: 'regist'
+  page: 'regist',
+  settings: {}
 }
 
 export default (state = initialState, action) => {
@@ -11,6 +11,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         page: action.page
+      }
+    case SET_SETTINGS:
+      return {
+        ...state,
+        settings: action.settings
       }
     default:
       return state

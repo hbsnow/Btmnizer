@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Grid } from 'semantic-ui-react'
-import { app } from 'electron'
+import { Grid, Container } from 'semantic-ui-react'
+import { remote } from 'electron'
 import path from 'path'
 import jsonfile from 'jsonfile'
 
-import { setPage } from '../actions/main'
+import { setPage, setSettings } from '../actions/main'
 import MainMenu from '../components/Main/MainMenu'
 import MainContent from '../components/Main/MainContent'
 import defaultSettings from '../common/settings.js'
@@ -21,35 +21,49 @@ class Main extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      settings: defaultSettings
-    }
+    this.jsonpath = path.join(remote.app.getPath('userData'), 'settings.json')
   }
 
   componentDidMount () {
-    this.setState({
-      settings: defaultSettings
-    })
+    const settings = this.readSettings()
+    this.props.setSettings(settings)
+  }
+
+  readSettings () {
+    let userSettings
+    try {
+      userSettings = jsonfile.readFileSync(this.jsonpath)
+    } catch (err) {
+      userSettings = defaultSettings
+      jsonfile.writeFileSync(this.jsonpath, userSettings)
+    }
+
+    return userSettings
   }
 
   render () {
-    const { menuItems, page, setPage } = this.props
+    const { menuItems, page, settings, setPage } = this.props
 
     return (
       <Grid stretched>
         <Grid.Row>
           <Grid.Column>
             <MainMenu
-              menuItems={menuItems}
               page={page}
-              onMenuClick={(val: string): void => setPage(val)}
+              menuItems={menuItems}
+              onMenuClick={(val: string) => setPage(val)}
             />
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row stretched>
           <Grid.Column>
-            <MainContent page={page} />
+            <Container>
+              <MainContent
+                page={page}
+                settings={settings}
+              />
+            </Container>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -59,12 +73,16 @@ class Main extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    settings: state.main.settings,
     page: state.main.page
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setSettings: (settings) => {
+      dispatch(setSettings(settings))
+    },
     setPage: (page) => {
       dispatch(setPage(page))
     }
