@@ -51,7 +51,7 @@ class Main extends Component {
             <MainMenu
               page={page}
               menuItems={menuItems}
-              onMenuClick={(val: string) => setPage(val)}
+              onMenuClick={(val) => setPage(val)}
             />
           </Grid.Column>
         </Grid.Row>

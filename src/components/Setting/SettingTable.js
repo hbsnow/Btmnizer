@@ -1,21 +1,27 @@
 import React from 'react'
-import { Grid, Input, Header, Table } from 'semantic-ui-react'
+import { Grid, Header, Table } from 'semantic-ui-react'
 import isPlainObject from 'lodash.isplainobject'
 import map from 'lodash.map'
 
-const SettingsTable = ({ item, setting }) => {
+import SettingTableRow from './SettingTableRow'
+
+const SettingTable = ({ item, setting, currentSettings, onSettingChange }) => {
   console.log(item, setting)
+
   const renderTable = (data) => {
     return (
       <Table>
         <Table.Body>
           {map(data, (val, key) => {
             return (
-              <Table.Row key={key}>
-                <Table.Cell width={4}>{key}</Table.Cell>
-                <Table.Cell width={4}>{val}</Table.Cell>
-                <Table.Cell width={8}><Input fluid size='small' defaultValue={val} /></Table.Cell>
-              </Table.Row>
+              <SettingTableRow
+                key={key}
+                thData={key}
+                tdData={val}
+                type={item.type}
+                currentSettings={currentSettings}
+                onSettingChange={onSettingChange}
+              />
             )
           })}
         </Table.Body>
@@ -23,10 +29,10 @@ const SettingsTable = ({ item, setting }) => {
     )
   }
 
-  const renderData = () => {
-    const hasChildData = isPlainObject(setting[Object.keys(setting)[0]])
+  const renderWrapper = () => {
+    const hasChildCollection = isPlainObject(setting[Object.keys(setting)[0]])
 
-    if (!hasChildData) {
+    if (!hasChildCollection) {
       return (
         <Grid.Row>
           <Grid.Column>
@@ -36,12 +42,12 @@ const SettingsTable = ({ item, setting }) => {
       )
     }
 
-    return map(setting, (collection, key) => {
+    return map(setting, (val, key) => {
       return (
         <Grid.Row key={key}>
           <Grid.Column>
             <Header size='small'>{key}</Header>
-            {renderTable(collection)}
+            {renderTable(val)}
           </Grid.Column>
         </Grid.Row>
       )
@@ -56,12 +62,10 @@ const SettingsTable = ({ item, setting }) => {
           <Header.Subheader>{item.text}</Header.Subheader>
         </Header>
 
-        <Grid>
-          {renderData()}
-        </Grid>
+        <Grid>{renderWrapper()}</Grid>
       </Grid.Column>
     </Grid.Row>
   )
 }
 
-export default SettingsTable
+export default SettingTable
