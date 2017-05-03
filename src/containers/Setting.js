@@ -4,6 +4,7 @@ import { Grid, Button } from 'semantic-ui-react'
 import map from 'lodash.map'
 
 import SettingTable from '../components/Setting/SettingTable'
+import SettingMenu from '../components/Setting/SettingMenu'
 import { setCurrentSettings } from '../actions/setting'
 
 const Setting = ({ settings, currentSettings, setCurrentSettings }) => {
@@ -34,6 +35,12 @@ const Setting = ({ settings, currentSettings, setCurrentSettings }) => {
 
   return (
     <Grid>
+      <Grid.Row>
+        <Grid.Column>
+          <SettingMenu />
+        </Grid.Column>
+      </Grid.Row>
+
       {map(items, (item) => {
         return (
           <SettingTable

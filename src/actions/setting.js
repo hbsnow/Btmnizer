@@ -1,6 +1,6 @@
-export const SET_ACTIVE_BUTTON = 'SET_ACTIVE_BUTTON'
+export const SET_CHANGED_SETTINGS = 'SET_CHANGED_SETTINGS'
 
-export const setActiveButton = (isActive) => ({
-  type: SET_ACTIVE_BUTTON,
-  isActive
+export const setChangedSettings = (changedSettings) => ({
+  type: SET_CHANGED_SETTINGS,
+  changedSettings
 })

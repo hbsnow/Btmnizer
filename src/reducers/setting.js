@@ -1,15 +1,15 @@
-import { SET_ACTIVE_BUTTON } from '../actions/setting.js'
+import { SET_CHANGED_SETTINGS } from '../actions/setting.js'
 
 const initialState = {
-  isActive: false
+  changedSettings: {}
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_ACTIVE_BUTTON:
+    case SET_CHANGED_SETTINGS:
       return {
         ...state,
-        isActive: action.isActive
+        changedSettings: action.changedSettings
       }
     default:
       return state
